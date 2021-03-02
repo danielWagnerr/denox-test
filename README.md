@@ -10,6 +10,7 @@ Obs.: Realizei o tratamento dos dados exportados, visto que todos estavam como S
 Para executar o app, entre na pasta src, crie o venv e instale as dependencias:
 
 ```shell
+cd src/
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt

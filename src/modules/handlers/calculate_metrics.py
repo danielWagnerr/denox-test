@@ -44,6 +44,17 @@ class CalculateMetricsHandler(tornado.web.RequestHandler):
         db.insert_results(result)
         self.write(result)
 
+    def __get_total_distance(self, pairwise_travels: list) -> float:
+        total_distance = 0
+        for p in pairwise_travels:
+            travel1, travel2 = p
+
+            distance = self.__get_distance(travel1['longitude'], travel1['latitude'],
+                                           travel2['longitude'], travel2['latitude'])
+            total_distance += distance
+
+        return round(total_distance, 3)
+
     @staticmethod
     def __get_distance(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
         lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
@@ -61,17 +72,6 @@ class CalculateMetricsHandler(tornado.web.RequestHandler):
         a, b = itertools.tee(iterable)
         next(b, None)
         return list(zip(a, b))
-
-    def __get_total_distance(self, pairwise_travels: list) -> float:
-        total_distance = 0
-        for p in pairwise_travels:
-            travel1, travel2 = p
-
-            distance = self.__get_distance(travel1['longitude'], travel1['latitude'],
-                                           travel2['longitude'], travel2['latitude'])
-            total_distance += distance
-
-        return round(total_distance, 3)
 
     @staticmethod
     def __get_stopped_time(pairwise_travels: list) -> float:
