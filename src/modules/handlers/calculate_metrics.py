@@ -24,7 +24,7 @@ class CalculateMetricsHandler(tornado.web.RequestHandler):
         except (AssertionError, ValueError) as e:
             return handle_helper.send_error(self, 400, str(e))
 
-        travels = list(db.get_travels(serial, initial_timestamp, final_timestamp))
+        travels = db.get_travels(serial, initial_timestamp, final_timestamp)
 
         pairwise_travels = self.__pairwise(travels)
         total_distance = self.__get_total_distance(pairwise_travels)

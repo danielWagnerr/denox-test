@@ -19,7 +19,7 @@ def get_travels(serial: str, initial_timestamp: int, final_timestamp: int) -> li
 
     query = {'serial': serial, 'datahora': {"$gte": initial_timestamp, "$lte": final_timestamp}}
     response = tracking_collection.find(query).sort("datahora", ASCENDING)
-    return response
+    return list(response)
 
 
 def insert_results(result: dict) -> None:
